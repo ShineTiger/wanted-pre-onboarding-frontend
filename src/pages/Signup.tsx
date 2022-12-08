@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import instance from "../api/instance";
 
 type ProfileType = {
@@ -12,6 +13,26 @@ type ProfileValidation = {
   email?: boolean;
   password?: boolean;
 };
+
+const UserProfileForm = styled.form`
+  width: 80%;
+  padding: 0 30px;
+  margin: 0 auto;
+  input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 5px 20px;
+    font-size: 1.3rem;
+    border: 1px solid black;
+    margin-bottom: 20px;
+  }
+  button[type="submit"] {
+    width: 100%;
+    font-size: 1.3rem;
+  }
+`;
 
 const Signup = () => {
   const [profile, setProfile] = useState<ProfileType>({
@@ -63,7 +84,7 @@ const Signup = () => {
   return (
     <>
       <h2>회원가입</h2>
-      <form onSubmit={submitSignupForm}>
+      <UserProfileForm onSubmit={submitSignupForm}>
         <input
           type="email"
           id="email"
@@ -72,7 +93,6 @@ const Signup = () => {
           required
           onChange={validationHandler}
         ></input>
-        <br></br>
         <input
           type="password"
           id="password"
@@ -88,7 +108,7 @@ const Signup = () => {
         >
           완료
         </button>
-      </form>
+      </UserProfileForm>
     </>
   );
 };
