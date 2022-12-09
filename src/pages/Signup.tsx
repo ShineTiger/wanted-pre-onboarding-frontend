@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import instance from "../api/instance";
+import ProfileInput from "../components/ProfileInput";
+import { UserProfileForm } from "../components/UI/UserProfileForm.style";
 
 type ProfileType = {
   email: string;
@@ -13,26 +15,6 @@ type ProfileValidation = {
   email?: boolean;
   password?: boolean;
 };
-
-const UserProfileForm = styled.form`
-  width: 80%;
-  padding: 0 30px;
-  margin: 0 auto;
-  input {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 10px;
-    padding: 5px 20px;
-    font-size: 1.3rem;
-    border: 1px solid black;
-    margin-bottom: 20px;
-  }
-  button[type="submit"] {
-    width: 100%;
-    font-size: 1.3rem;
-  }
-`;
 
 const Signup = () => {
   const [profile, setProfile] = useState<ProfileType>({
@@ -71,6 +53,7 @@ const Signup = () => {
     instance
       .post("/auth/signup", profile)
       .then((res) => {
+        console.log(res);
         if (res.statusText === "Created") {
           window.confirm("회원가입이 완료되었습니다. 로그인 하시겠습니까?") &&
             navigate("/login");
@@ -85,23 +68,22 @@ const Signup = () => {
     <>
       <h2>회원가입</h2>
       <UserProfileForm onSubmit={submitSignupForm}>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="이메일을 입력해주세요"
-          required
+        <ProfileInput
+          type={"email"}
+          id={"email"}
+          name={"email"}
+          placeholder={"이메일을 입력해주세요"}
+          required={true}
           onChange={validationHandler}
-        ></input>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="비밀번호를 입력해주세요"
-          required
+        ></ProfileInput>
+        <ProfileInput
+          type={"password"}
+          id={"password"}
+          name={"password"}
+          placeholder={"비밀번호를 입력해주세요"}
+          required={true}
           onChange={validationHandler}
-        ></input>
-
+        ></ProfileInput>
         <button
           type="submit"
           disabled={validation.email && validation.password ? false : true}
