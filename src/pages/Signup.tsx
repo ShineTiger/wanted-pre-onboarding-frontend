@@ -6,16 +6,6 @@ import instance from "../api/instance";
 import ProfileInput from "../components/ProfileInput";
 import { UserProfileForm } from "../components/UI/UserProfileForm.style";
 
-type ProfileType = {
-  email: string;
-  password: string;
-};
-
-type ProfileValidation = {
-  email?: boolean;
-  password?: boolean;
-};
-
 const Signup = () => {
   const [profile, setProfile] = useState<ProfileType>({
     email: "",
