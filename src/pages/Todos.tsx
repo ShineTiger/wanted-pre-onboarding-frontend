@@ -1,13 +1,7 @@
 import { link } from "fs";
 import React, { useEffect, useRef, useState } from "react";
 import instance from "../api/instance";
-
-interface TodoInfo {
-  id: number;
-  todo: string;
-  isCompleted: boolean;
-  userId: number;
-}
+import TodoList from "../components/TodoList";
 
 const Todos = () => {
   const [todoInput, setTodoInput] = useState<TodoInfo>({
@@ -16,18 +10,7 @@ const Todos = () => {
     isCompleted: false,
     userId: 0,
   });
-  const [todoList, setTodoList] = useState<TodoInfo[]>([]);
-
-  const todoId = useRef(0);
-
-  // const createTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { value } = e.target;
-  //   const newTodo = {
-  //     id: (todoId.current += 1),
-  //     todo: e.target.value,
-  //     isCompleted: false,
-  //   };
-  // };
+  const [todos, setTodos] = useState<TodoInfo[]>([]);
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoInput({ ...todoInput, todo: e.target.value });
@@ -40,7 +23,7 @@ const Todos = () => {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
       })
-      .then((res) => setTodoList(res.data));
+      .then((res) => setTodos(res.data));
   };
 
   const createTodo = () => {
@@ -50,7 +33,7 @@ const Todos = () => {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
       })
-      .then((res) => setTodoList((prev) => [...prev, res.data]));
+      .then((res) => setTodos((prev) => [...prev, res.data]));
   };
 
   const deleteTodo = (id: number) => {
@@ -61,7 +44,21 @@ const Todos = () => {
         },
       })
       .then(() => {
-        setTodoList((arr) => arr.filter((i) => i.id !== id));
+        setTodos((arr) => arr.filter((i) => i.id !== id));
+      });
+  };
+
+  const updateTodo = (id: number, newTodo: string) => {
+    instance
+      .put(`/todos/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      })
+      .then(() => {
+        setTodos((arr) =>
+          arr.filter((i) => (i.id === id ? { ...i, todo: newTodo } : i))
+        );
       });
   };
 
@@ -71,20 +68,10 @@ const Todos = () => {
 
   return (
     <div>
+      <h2>투두 리스트</h2>
       <input onChange={onChangeHandler}></input>
       <button onClick={createTodo}>추가</button>
-      <ul>
-        {todoList.map((i) => {
-          return (
-            <li key={i.id}>
-              <span>{i.todo}</span>
-              <input type="checkbox" />
-              <button>수정</button>
-              <button onClick={() => deleteTodo(i.id)}>삭제</button>
-            </li>
-          );
-        })}
-      </ul>
+      <TodoList todos={todos} deleteTodo={deleteTodo} updateTodo={updateTodo} />
     </div>
   );
 };
