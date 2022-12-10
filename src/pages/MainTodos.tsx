@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import instance from "../api/instance";
 import TodoList from "../components/TodoList";
 
-const Todos = () => {
+const MainTodos = () => {
   const [todoInput, setTodoInput] = useState<TodoInfo>({
     id: 0,
     content: "",
@@ -76,4 +76,4 @@ const Todos = () => {
   );
 };
 
-export default Todos;
+export default MainTodos;
