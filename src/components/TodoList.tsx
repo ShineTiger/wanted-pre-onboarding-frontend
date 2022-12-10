@@ -13,13 +13,16 @@ const TodoList = ({ todos, deleteTodo, updateTodo }: TodoListsProps) => {
     setIsUpdate(!isUpdate);
   };
 
+  const handleCancelUpdate = () => {
+    setIsUpdate(false);
+  };
+
   return (
     <div>
       <ul>
         {todos.map((i) => {
           return (
             <li key={i.id}>
-              <span>{i.todo}</span>
               <input type="checkbox" />
               {isUpdate ? (
                 <>
@@ -32,6 +35,7 @@ const TodoList = ({ todos, deleteTodo, updateTodo }: TodoListsProps) => {
                 </>
               ) : (
                 <>
+                  <span>{i.todo}</span>
                   <input
                     type="button"
                     value="수정"

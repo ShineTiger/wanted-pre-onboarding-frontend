@@ -6,14 +6,14 @@ import TodoList from "../components/TodoList";
 const Todos = () => {
   const [todoInput, setTodoInput] = useState<TodoInfo>({
     id: 0,
-    todo: "",
+    content: "",
     isCompleted: false,
     userId: 0,
   });
   const [todos, setTodos] = useState<TodoInfo[]>([]);
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTodoInput({ ...todoInput, todo: e.target.value });
+    setTodoInput({ ...todoInput, content: e.target.value });
   };
 
   const getTodos = () => {
