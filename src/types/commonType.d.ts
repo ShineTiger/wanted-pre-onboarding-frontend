@@ -10,7 +10,7 @@ type ProfileValidation = {
 
 interface TodoInfo {
   id: number;
-  content: string;
+  todo: string;
   isCompleted: boolean;
   userId: number;
 }
