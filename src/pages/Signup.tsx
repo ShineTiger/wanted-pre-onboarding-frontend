@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import instance from "../api/instance";
@@ -53,6 +53,12 @@ const Signup = () => {
         alert("오류가 발생했습니다");
       });
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("access_token")) {
+      navigate("/todo");
+    }
+  });
 
   return (
     <>
