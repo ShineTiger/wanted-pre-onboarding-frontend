@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { EditButtons, EditContent, EditInput } from "./UI/TodoItem.style";
 
 interface TodoItemsProps {
   item: TodoInfo;
@@ -35,30 +36,57 @@ const TodoItem = ({ item, deleteTodo, updateTodo }: TodoItemsProps) => {
 
   return (
     <>
-      <input
-        type="checkbox"
-        checked={isCompleted}
-        onChange={handleCompleteToggle}
-      />
-      {isCompleted ? <span>완료</span> : <span></span>}
+      <EditContent>
+        <input
+          type="checkbox"
+          checked={isCompleted}
+          onChange={handleCompleteToggle}
+        />
+        <span>{item.todo}</span>
+      </EditContent>
       {isUpdate ? (
         <>
-          <input
-            value={updateContent}
-            onChange={(e) => setUpdateContent(e.target.value)}
-          ></input>
-          <input type="button" value="제출" onClick={submitUpdate} />
-          <input type="button" value="취소" onClick={() => quitUpdate()} />
+          <EditInput>
+            <input
+              value={updateContent}
+              onChange={(e) => setUpdateContent(e.target.value)}
+            ></input>
+          </EditInput>
+          <EditButtons>
+            <input
+              type="button"
+              value="제출"
+              style={{
+                background: "#02a2ff",
+                border: "1px solid #02a2ff",
+                color: "#fff",
+              }}
+              onClick={submitUpdate}
+            />
+            <input
+              type="button"
+              value="취소"
+              style={{ color: "#8b0f0f", border: "1px solid #8b0f0f" }}
+              onClick={() => quitUpdate()}
+            />
+          </EditButtons>
         </>
       ) : (
         <>
-          <span>{item.todo}</span>
-          <input type="button" value="수정" onClick={handleUpdateToggle} />
-          <input
-            type="button"
-            value="삭제"
-            onClick={() => deleteTodo(item.id)}
-          />
+          <EditButtons>
+            <input
+              type="button"
+              value="수정"
+              style={{ background: "#9b82ff", border: "1px solid #450f8b" }}
+              onClick={handleUpdateToggle}
+            />
+            <input
+              type="button"
+              value="삭제"
+              onClick={() => deleteTodo(item.id)}
+              style={{ background: "#ff8282", border: "1px solid #8b0f0f" }}
+            />
+          </EditButtons>
         </>
       )}
     </>

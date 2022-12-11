@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import TodoItem from "./TodoItem";
+import { CheckboxList } from "./UI/TodoItem.style";
 
 interface TodoListsProps {
   todos: TodoInfo[];
@@ -10,7 +12,7 @@ interface TodoListsProps {
 const TodoList = ({ todos, deleteTodo, updateTodo }: TodoListsProps) => {
   return (
     <div>
-      <ul>
+      <CheckboxList>
         {todos.map((i) => {
           return (
             <li key={i.id}>
@@ -22,7 +24,7 @@ const TodoList = ({ todos, deleteTodo, updateTodo }: TodoListsProps) => {
             </li>
           );
         })}
-      </ul>
+      </CheckboxList>
     </div>
   );
 };
