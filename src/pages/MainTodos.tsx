@@ -4,16 +4,22 @@ import instance from "../api/instance";
 import TodoList from "../components/TodoList";
 
 const MainTodos = () => {
-  const [todoInput, setTodoInput] = useState<TodoInfo>({
-    id: 0,
-    content: "",
-    isCompleted: false,
-    userId: 0,
-  });
+  const [todoInput, setTodoInput] = useState<string>("");
   const [todos, setTodos] = useState<TodoInfo[]>([]);
+  const [isUpdate, setIsUpdate] = useState(false);
+  // const [todosItem, setTodosItem] = useState
+  const [todoContent, setTodoContent] = useState<string>();
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTodoInput({ ...todoInput, content: e.target.value });
+    setTodoInput(e.target.value);
+  };
+
+  const handleUpdateToggle = () => {
+    setIsUpdate(!isUpdate);
+  };
+
+  const quitUpdate = () => {
+    setIsUpdate(false);
   };
 
   const getTodos = () => {
@@ -28,11 +34,15 @@ const MainTodos = () => {
 
   const createTodo = () => {
     instance
-      .post("/todos", todoInput, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      })
+      .post(
+        "/todos",
+        { todo: todoInput },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      )
       .then((res) => setTodos((prev) => [...prev, res.data]));
   };
 
@@ -72,6 +82,40 @@ const MainTodos = () => {
       <input onChange={onChangeHandler}></input>
       <button onClick={createTodo}>추가</button>
       <TodoList todos={todos} deleteTodo={deleteTodo} updateTodo={updateTodo} />
+      {/* <ul>
+        {todos.map((i) => {
+          return (
+            <li key={i.id}>
+              <input type="checkbox" />
+              {isUpdate ? (
+                <>
+                <input ></input>
+                  <input
+                    type="button"
+                    value="제출"
+                    onClick={() => updateTodo(i.id, i.todo)}
+                  />
+                  <input type="button" value="취소" onClick={quitUpdate} />
+                </>
+              ) : (
+                <>
+                  <span>{i.todo}</span>
+                  <input
+                    type="button"
+                    value="수정"
+                    onClick={handleUpdateToggle}
+                  />
+                  <input
+                    type="button"
+                    value="삭제"
+                    onClick={() => deleteTodo(i.id)}
+                  />
+                </>
+              )}
+            </li>
+          );
+        })}
+      </ul> */}
     </div>
   );
 };
