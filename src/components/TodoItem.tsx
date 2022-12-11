@@ -66,5 +66,3 @@ const TodoItem = ({ item, deleteTodo, updateTodo }: TodoItemsProps) => {
 };
 
 export default TodoItem;
-
-const checkBox = styled.span``;
