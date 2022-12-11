@@ -9,6 +9,7 @@ interface TodoItemsProps {
 const TodoItem = ({ item, deleteTodo, updateTodo }: TodoItemsProps) => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [updateContent, setUpdateContent] = useState(item.todo);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const handleUpdateToggle = () => {
     setIsUpdate(!isUpdate);
@@ -25,7 +26,7 @@ const TodoItem = ({ item, deleteTodo, updateTodo }: TodoItemsProps) => {
 
   return (
     <>
-      <input type="checkbox" />
+      <input type="checkbox" onClick={() => setIsCompleted(!isCompleted)} />
       {isUpdate ? (
         <>
           <input
@@ -37,6 +38,7 @@ const TodoItem = ({ item, deleteTodo, updateTodo }: TodoItemsProps) => {
         </>
       ) : (
         <>
+          {isCompleted ? <span>완료</span> : <span></span>}
           <span>{item.todo}</span>
           <input type="button" value="수정" onClick={handleUpdateToggle} />
           <input
