@@ -2,6 +2,7 @@ import { link } from "fs";
 import React, { useEffect, useRef, useState } from "react";
 import instance from "../api/instance";
 import TodoList from "../components/TodoList";
+import { CreateSection } from "../components/UI/TodoCreate.style";
 
 const MainTodos = () => {
   const [todoInput, setTodoInput] = useState<string>("");
@@ -71,8 +72,10 @@ const MainTodos = () => {
   return (
     <div>
       <h2>투두 리스트</h2>
-      <input onChange={onChangeHandler}></input>
-      <button onClick={createTodo}>추가</button>
+      <CreateSection>
+        <input onChange={onChangeHandler}></input>
+        <button onClick={createTodo}>추가</button>
+      </CreateSection>
       <TodoList todos={todos} deleteTodo={deleteTodo} updateTodo={updateTodo} />
     </div>
   );
