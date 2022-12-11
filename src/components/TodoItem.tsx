@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 
 interface TodoItemsProps {
   item: TodoInfo;
@@ -9,10 +10,14 @@ interface TodoItemsProps {
 const TodoItem = ({ item, deleteTodo, updateTodo }: TodoItemsProps) => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [updateContent, setUpdateContent] = useState(item.todo);
-  const [isCompleted, setIsCompleted] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(item.isCompleted);
 
   const handleUpdateToggle = () => {
     setIsUpdate(!isUpdate);
+  };
+
+  const handleCompleteToggle = () => {
+    setIsCompleted(!isCompleted);
   };
 
   const quitUpdate = () => {
@@ -20,13 +25,22 @@ const TodoItem = ({ item, deleteTodo, updateTodo }: TodoItemsProps) => {
   };
 
   const submitUpdate = () => {
-    updateTodo(item.id, updateContent, item.isCompleted);
+    updateTodo(item.id, updateContent, isCompleted);
     handleUpdateToggle();
   };
 
+  useEffect(() => {
+    updateTodo(item.id, updateContent, isCompleted);
+  }, [isCompleted]);
+
   return (
     <>
-      <input type="checkbox" onClick={() => setIsCompleted(!isCompleted)} />
+      <input
+        type="checkbox"
+        checked={isCompleted}
+        onChange={handleCompleteToggle}
+      />
+      {isCompleted ? <span>완료</span> : <span></span>}
       {isUpdate ? (
         <>
           <input
@@ -38,7 +52,6 @@ const TodoItem = ({ item, deleteTodo, updateTodo }: TodoItemsProps) => {
         </>
       ) : (
         <>
-          {isCompleted ? <span>완료</span> : <span></span>}
           <span>{item.todo}</span>
           <input type="button" value="수정" onClick={handleUpdateToggle} />
           <input
@@ -53,3 +66,5 @@ const TodoItem = ({ item, deleteTodo, updateTodo }: TodoItemsProps) => {
 };
 
 export default TodoItem;
+
+const checkBox = styled.span``;
