@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import instance from "../api/instance";
 import ProfileInput from "../components/ProfileInput";
@@ -80,6 +80,7 @@ const Signup = () => {
           required={true}
           onChange={validationHandler}
         ></ProfileInput>
+        <Link to="/login">계정이 있다면? 로그인</Link>
         <button
           type="submit"
           disabled={validation.email && validation.password ? false : true}

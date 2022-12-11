@@ -17,5 +17,6 @@ export const UserProfileForm = styled.form`
   button[type="submit"] {
     width: 100%;
     font-size: 1.3rem;
+    margin-top: 20px;
   }
 `;
